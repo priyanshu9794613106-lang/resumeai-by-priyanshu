@@ -1,5 +1,5 @@
 // ResumeAI by Priyanshu Mishra
-// Working Resume Generator + AI Summary + PDF Download
+// Complete Script: AI Resume + Trial + Payment + PDF
 
 function generateResume() {
   const name = document.getElementById('name').value || 'Your Name';
@@ -17,19 +17,16 @@ function generateResume() {
       <hr style="margin:20px 0;border:1px solid #e5e7eb;">
 
       <h2 style="color:#2563eb;font-size:20px;">Professional Summary</h2>
-      <p style="line-height:1.7;">
-        Motivated and career-focused professional with strong technical knowledge,
-        communication skills, and a passion for continuous learning.
-      </p>
+      <p>Motivated and career-focused professional with strong technical knowledge and communication skills.</p>
 
       <h2 style="color:#2563eb;font-size:20px;margin-top:18px;">Education</h2>
-      <p style="line-height:1.7;">${education}</p>
+      <p>${education}</p>
 
       <h2 style="color:#2563eb;font-size:20px;margin-top:18px;">Skills</h2>
-      <p style="line-height:1.7;">${skills}</p>
+      <p>${skills}</p>
 
       <h2 style="color:#2563eb;font-size:20px;margin-top:18px;">Experience</h2>
-      <p style="line-height:1.7;">${experience}</p>
+      <p>${experience}</p>
 
       <h2 style="color:#2563eb;font-size:20px;margin-top:18px;">Languages</h2>
       <p>English, Hindi</p>
@@ -95,16 +92,7 @@ function generateAIResume() {
   `;
 }
 
-function downloadPDF() {
-  const element = document.getElementById('resumePreview');
-
-  const options = {
-    margin: 0.5,
-    filename: 'ResumeAI_Professional_Resume.pdf',
-    image: { type: 'jpeg', quality: 1 },
-    html2canvas: { scale: 2, useCORS: true },
-    jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
-    // 10-Day Free Trial System
+// 10-Day Free Trial System
 function isTrialActive() {
   const trialStart = localStorage.getItem('resumeai_trial_start');
 
@@ -136,10 +124,12 @@ function getRemainingDays() {
   return Math.max(0, 10 - diffDays);
 }
 
-// Replace your downloadPDF() function with this
+// PDF Download + Payment Lock
 function downloadPDF() {
 
-  if (!isTrialActive()) {
+  const paid = localStorage.getItem('resumeai_paid');
+
+  if (!isTrialActive() && paid !== 'true') {
     alert('Your 10-day free trial has expired. Please pay ₹20 to download your resume.');
     window.location.href = 'payment.html';
     return;
@@ -166,22 +156,29 @@ function downloadPDF() {
   };
 
   html2pdf().set(options).from(element).save();
+
 }
 
+// Update trial banner
 document.addEventListener('DOMContentLoaded', function () {
+
   const remaining = getRemainingDays();
 
   const banner = document.getElementById('trialBanner');
 
   if (banner) {
+
     if (remaining > 0) {
       banner.innerHTML = `🎉 Free Trial: ${remaining} days remaining`;
     } else {
       banner.innerHTML = '⚠️ Free trial expired - ₹20 per resume';
     }
-  }
-});
-  };
 
-  html2pdf().set(options).from(element).save();
+  }
+
+});
+
+// Reset payment
+function resetPayment() {
+  localStorage.removeItem('resumeai_paid');
 }
