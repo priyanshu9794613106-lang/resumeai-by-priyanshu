@@ -416,6 +416,16 @@ footer p{
     
   }
 }
+    .trial-banner{
+  background:#10b981;
+  color:#fff;
+  text-align:center;
+  padding:12px;
+  border-radius:12px;
+  font-weight:600;
+  margin-bottom:25px;
+}
+    
     height:360px;
   }
 }
