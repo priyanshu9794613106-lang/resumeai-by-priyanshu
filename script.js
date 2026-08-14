@@ -104,6 +104,83 @@ function downloadPDF() {
     image: { type: 'jpeg', quality: 1 },
     html2canvas: { scale: 2, useCORS: true },
     jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
+    // 10-Day Free Trial System
+function isTrialActive() {
+  const trialStart = localStorage.getItem('resumeai_trial_start');
+
+  if (!trialStart) {
+    localStorage.setItem('resumeai_trial_start', new Date().toISOString());
+    return true;
+  }
+
+  const startDate = new Date(trialStart);
+  const currentDate = new Date();
+
+  const diffTime = currentDate - startDate;
+  const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+
+  return diffDays < 10;
+}
+
+function getRemainingDays() {
+  const trialStart = localStorage.getItem('resumeai_trial_start');
+
+  if (!trialStart) return 10;
+
+  const startDate = new Date(trialStart);
+  const currentDate = new Date();
+
+  const diffTime = currentDate - startDate;
+  const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+
+  return Math.max(0, 10 - diffDays);
+}
+
+// Replace your downloadPDF() function with this
+function downloadPDF() {
+
+  if (!isTrialActive()) {
+    alert('Your 10-day free trial has expired. Please pay ₹20 to download your resume.');
+    window.location.href = 'payment.html';
+    return;
+  }
+
+  const element = document.getElementById('resumePreview');
+
+  const options = {
+    margin: 0.5,
+    filename: 'ResumeAI_Professional_Resume.pdf',
+    image: {
+      type: 'jpeg',
+      quality: 1
+    },
+    html2canvas: {
+      scale: 2,
+      useCORS: true
+    },
+    jsPDF: {
+      unit: 'in',
+      format: 'a4',
+      orientation: 'portrait'
+    }
+  };
+
+  html2pdf().set(options).from(element).save();
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+  const remaining = getRemainingDays();
+
+  const banner = document.getElementById('trialBanner');
+
+  if (banner) {
+    if (remaining > 0) {
+      banner.innerHTML = `🎉 Free Trial: ${remaining} days remaining`;
+    } else {
+      banner.innerHTML = '⚠️ Free trial expired - ₹20 per resume';
+    }
+  }
+});
   };
 
   html2pdf().set(options).from(element).save();
