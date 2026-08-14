@@ -55,6 +55,56 @@ function generateResume() {
 
   html2pdf().set(options).from(element).save();
 }
+// 30-day free trial system
+function checkTrialStatus() {
+  const trialStart = localStorage.getItem('trialStartDate');
+
+  if (!trialStart) {
+    localStorage.setItem('trialStartDate', new Date().toISOString());
+    return true;
+  }
+
+  const startDate = new Date(trialStart);
+  const currentDate = new Date();
+
+  const diffTime = currentDate - startDate;
+  const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+
+  if (diffDays < 30) {
+    return true;
+  }
+
+  return false;
+}
+
+function updateTrialBanner() {
+  const banner = document.getElementById('trialBanner');
+  if (!banner) return;
+
+  const trialStart = localStorage.getItem('trialStartDate');
+  if (!trialStart) {
+    banner.innerHTML = '🎉 30-Day Free Trial Active';
+    return;
+  }
+
+  const startDate = new Date(trialStart);
+  const currentDate = new Date();
+  const diffDays = Math.floor((currentDate - startDate) / (1000 * 60 * 60 * 24));
+  const remaining = 30 - diffDays;
+
+  if (remaining > 0) {
+    banner.innerHTML = `🎉 Free Trial: ${remaining} days remaining`;
+  } else {
+    banner.innerHTML = '⚠️ Free trial expired — ₹20 per resume';
+    banner.style.background = '#dc2626';
+  }
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+  checkTrialStatus();
+  updateTrialBanner();
+});
+
 
       <h2 style="color:#2563eb;font-size:20px;margin:20px 0 10px;">Languages</h2>
       <p>English, Hindi</p>
