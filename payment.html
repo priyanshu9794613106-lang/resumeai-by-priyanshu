@@ -1,39 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Upgrade to Premium | ResumeAI</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 
-<script>
-emailjs.init({
-  publicKey: "YOUR_PUBLIC_KEY"
-});
-</script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="style.css" />
+</head>
 <body>
 
   <header class="navbar">
-    <div class="container">
-      <h2 class="logo">ResumeAI</h2>
-      <a href="index.html" class="btn">Home</a>
+    <div class="container nav-container">
+
+      <div class="logo">
+        <span class="logo-icon">AI</span>
+        <span>ResumeAI</span>
+      </div>
+
+      <a href="index.html" class="nav-btn">Back to Home</a>
+
     </div>
   </header>
 
   <section class="payment-page">
+
     <div class="container payment-container">
 
       <div class="payment-card">
 
-        <div class="payment-badge">Premium Resume Unlock</div>
+        <div class="payment-badge">
+          Premium Access
+        </div>
 
-        <h1>Unlock Professional PDF Download</h1>
+        <h1>Unlock ResumeAI Premium</h1>
 
         <p class="payment-subtitle">
-          Your 30-day free trial has expired. Pay ₹20 to download
-          your professionally formatted ATS-friendly resume.
+          Your 10-day free trial has expired.
+          Pay only ₹20 to download your professional ATS-friendly resume.
         </p>
 
         <div class="price-display">
@@ -44,25 +51,32 @@ emailjs.init({
           <img src="assets/qr.png" alt="UPI QR Code">
         </div>
 
-        <div class="payment-info">
-          <p><strong>Pay using any UPI app</strong></p>
-          <p>Google Pay • PhonePe • Paytm • BHIM</p>
-          <p>Scan the QR code and complete the payment.</p>
-        </div>
+        <p class="payment-info">
+          Scan the QR code using Google Pay, PhonePe, Paytm,
+          or any UPI app and complete the payment.
+        </p>
 
-        <button class="btn payment-btn" onclick="verifyPayment()">
+        <button class="btn-primary full-width" onclick="paymentSuccess()">
           I Have Paid ₹20
         </button>
 
         <p class="secure-note">
-          🔒 Secure payment verification by ResumeAI
+          Secure payment verification by ResumeAI
         </p>
 
       </div>
 
     </div>
+
   </section>
 
-  <script src="script.js"></script>
+  <script>
+    function paymentSuccess() {
+      localStorage.setItem('resumeai_paid', 'true');
+      alert('Payment request submitted successfully. Your premium access will be activated.');
+      window.location.href = 'resume.html';
+    }
+  </script>
+
 </body>
 </html>
