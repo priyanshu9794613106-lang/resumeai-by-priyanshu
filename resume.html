@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create Resume | ResumeAI</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header class="navbar">
+    <div class="container">
+      <h2 class="logo">ResumeAI</h2>
+      <a href="index.html" class="btn">Back to Home</a>
+    </div>
+  </header>
+
+  <section class="resume-builder">
+    <div class="container builder-grid">
+
+      <div class="form-card">
+        <h2>Create Your Resume</h2>
+
+        <label>Full Name</label>
+        <input type="text" id="name" placeholder="Enter your full name">
+
+        <label>Email</label>
+        <input type="email" id="email" placeholder="Enter your email">
+
+        <label>Phone Number</label>
+        <input type="text" id="phone" placeholder="Enter your phone number">
+
+        <label>Education</label>
+        <textarea id="education" rows="3" placeholder="B.Tech, College Name..."></textarea>
+
+        <label>Skills</label>
+        <textarea id="skills" rows="3" placeholder="Java, Python, Web Development..."></textarea>
+
+        <label>Experience</label>
+        <textarea id="experience" rows="4" placeholder="Internship, Projects..."></textarea>
+
+        <button class="btn" onclick="generateResume()">
+          Generate Resume
+        </button>
+      </div>
+
+      <div class="preview-card">
+        <div id="resumePreview">
+          <h1>Your Name</h1>
+          <p>Email | Phone</p>
+
+          <hr>
+
+          <h3>Education</h3>
+          <p>Your education will appear here.</p>
+
+          <h3>Skills</h3>
+          <p>Your skills will appear here.</p>
+
+          <h3>Experience</h3>
+          <p>Your experience will appear here.</p>
+        </div>
+
+        <button class="btn" style="margin-top:20px;">
+          Download PDF
+        </button>
+      </div>
+
+    </div>
+  </section>
+
+  <script src="script.js"></script>
+</body>
+</html>
