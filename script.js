@@ -96,5 +96,15 @@ function generateAIResume() {
 }
 
 function downloadPDF() {
-  alert('PDF download feature will be connected in the next step.');
+  const element = document.getElementById('resumePreview');
+
+  const options = {
+    margin: 0.5,
+    filename: 'ResumeAI_Professional_Resume.pdf',
+    image: { type: 'jpeg', quality: 1 },
+    html2canvas: { scale: 2, useCORS: true },
+    jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
+  };
+
+  html2pdf().set(options).from(element).save();
 }
