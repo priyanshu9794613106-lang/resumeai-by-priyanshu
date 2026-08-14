@@ -326,6 +326,27 @@ footer p{
 
   .premium-plan{
     transform:none;
+    .ai-btn{
+  width:100%;
+  margin-top:16px;
+  background:linear-gradient(135deg,#7c3aed,#2563eb);
+}
+
+.ai-btn:hover{
+  transform:translateY(-2px);
+}
+
+.ai-note{
+  margin-top:16px;
+  padding:16px;
+  border-radius:14px;
+  background:rgba(124,58,237,.12);
+  border:1px solid rgba(124,58,237,.25);
+  color:#cbd5e1;
+  font-size:14px;
+  line-height:1.6;
+}
+    
   }
 }
     height:360px;
