@@ -104,6 +104,35 @@ document.addEventListener('DOMContentLoaded', function () {
   checkTrialStatus();
   updateTrialBanner();
 });
+function verifyPayment() {
+
+  const templateParams = {
+    user_name: "ResumeAI Customer",
+    user_email: "customer@email.com",
+    user_phone: "+91 0000000000",
+    payment_status: "Paid ₹20",
+    payment_time: new Date().toLocaleString()
+  };
+
+  emailjs.send(
+    "YOUR_SERVICE_ID",
+    "YOUR_TEMPLATE_ID",
+    templateParams
+  ).then(function() {
+
+    alert("Payment request submitted successfully! Your PDF will be unlocked after verification.");
+
+    localStorage.setItem("paymentVerified", "true");
+
+  }).catch(function(error) {
+
+    alert("Payment verification failed. Please try again.");
+
+    console.log(error);
+
+  });
+
+}
 
 
       <h2 style="color:#2563eb;font-size:20px;margin:20px 0 10px;">Languages</h2>
