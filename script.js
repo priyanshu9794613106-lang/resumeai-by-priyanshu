@@ -35,6 +35,26 @@ function generateResume() {
         <li>Professional Portfolio Website</li>
         <li>Responsive Web Application</li>
       </ul>
+      function downloadPDF() {
+  const element = document.getElementById('resumePreview');
+
+  const options = {
+    margin: 0.5,
+    filename: 'ResumeAI_Professional_Resume.pdf',
+    image: { type: 'jpeg', quality: 1 },
+    html2canvas: {
+      scale: 2,
+      useCORS: true
+    },
+    jsPDF: {
+      unit: 'in',
+      format: 'a4',
+      orientation: 'portrait'
+    }
+  };
+
+  html2pdf().set(options).from(element).save();
+}
 
       <h2 style="color:#2563eb;font-size:20px;margin:20px 0 10px;">Languages</h2>
       <p>English, Hindi</p>
