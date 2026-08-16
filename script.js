@@ -126,14 +126,45 @@ function getRemainingDays() {
 
 // PDF Download + Payment Lock
 function downloadPDF() {
+    const element = document.getElementById("resumePreview");
 
-  const paid = localStorage.getItem('resumeai_paid');
+    if (!element) {
+        alert("Resume Preview nahi mila!");
+        return;
+    }
 
-  if (!isTrialActive() && paid !== 'true') {
-    alert('Your 10-day free trial has expired. Please pay ₹20 to download your resume.');
-    window.location.href = 'payment.html';
-    return;
-  }
+    if (!element.innerHTML.trim()) {
+        alert("Pehle Generate Resume par click karo!");
+        return;
+    }
+
+    const options = {
+        margin: 0.4,
+        filename: "ResumeAI_Professional_Resume.pdf",
+        image: {
+            type: "jpeg",
+            quality: 0.98
+        },
+        html2canvas: {
+            scale: 2,
+            useCORS: true,
+            backgroundColor: "#ffffff"
+        },
+        jsPDF: {
+            unit: "in",
+            format: "a4",
+            orientation: "portrait"
+        }
+    };
+
+    element.style.background = "#ffffff";
+    element.style.color = "#111827";
+
+    html2pdf()
+        .set(options)
+        .from(element)
+        .save();
+}
 
   const element = document.getElementById('resumePreview');
 
