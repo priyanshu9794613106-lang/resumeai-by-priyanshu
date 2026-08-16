@@ -1,273 +1,1398 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
   <title>Create Resume | ResumeAI</title>
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css" />
-</head>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet"
+  >
+
+  <!-- PDF LIBRARY - ONLY ONCE -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+
+  <style>
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: "Poppins", sans-serif;
+      background: #07111f;
+      color: white;
+      min-height: 100vh;
+    }
+
+    .container {
+      width: 92%;
+      max-width: 1200px;
+      margin: auto;
+    }
+
+    /* ================= NAVBAR ================= */
+
+    .navbar {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(7,17,31,0.96);
+      backdrop-filter: blur(15px);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .nav-container {
+      min-height: 90px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 28px;
+      font-weight: 800;
+    }
+
+    .logo-icon {
+      width: 48px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #3478f6;
+      border-radius: 15px;
+    }
+
+    .nav-btn {
+      text-decoration: none;
+      color: white;
+      background: #3478f6;
+      padding: 14px 25px;
+      border-radius: 14px;
+      font-weight: 600;
+      transition: 0.25s;
+    }
+
+    .nav-btn:hover {
+      transform: translateY(-2px);
+      background: #2563eb;
+    }
+
+    /* ================= BUILDER ================= */
+
+    .resume-builder {
+      padding: 35px 0 70px;
+    }
+
+    /* ================= TEMPLATES ================= */
+
+    .template-selector {
+      width: 92%;
+      max-width: 1300px;
+      margin: 0 auto 35px;
+      padding: 25px;
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 24px;
+      background: #111c2b;
+    }
+
+    .template-heading {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 22px;
+      font-size: 20px;
+      font-weight: 700;
+    }
+
+    .template-heading small {
+      color: #94a3b8;
+      font-size: 13px;
+    }
+
+    .template-grid {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 16px;
+    }
+
+    .template-card {
+      border: 1px solid rgba(255,255,255,0.1);
+      background: #182536;
+      color: white;
+      padding: 12px;
+      border-radius: 17px;
+      cursor: pointer;
+      text-align: left;
+      transition: 0.25s;
+    }
+
+    .template-card:hover {
+      transform: translateY(-3px);
+      border-color: #3478f6;
+    }
+
+    .template-card.active {
+      border-color: #3478f6;
+      box-shadow: 0 0 0 1px #3478f6;
+    }
+
+    .template-card strong {
+      display: block;
+      margin-top: 10px;
+      font-size: 14px;
+    }
+
+    .template-card span {
+      display: block;
+      margin-top: 3px;
+      color: #94a3b8;
+      font-size: 11px;
+    }
+
+    .template-preview {
+      height: 115px;
+      background: #fff;
+      border-radius: 11px;
+      padding: 13px;
+    }
+
+    .preview-top {
+      height: 17px;
+      width: 65%;
+      background: #162033;
+      border-radius: 4px;
+      margin-bottom: 12px;
+    }
+
+    .preview-lines {
+      height: 3px;
+      background: #d5dce7;
+      margin: 8px 0;
+      box-shadow:
+        0 10px #d5dce7,
+        0 20px #d5dce7,
+        0 30px #d5dce7,
+        0 40px #d5dce7;
+    }
+
+    .ats-preview .preview-top {
+      background: #2563eb;
+    }
+
+    .minimal-preview .preview-top {
+      width: 45%;
+      background: #111827;
+    }
+
+    .creative-preview .preview-top {
+      background: #7c3aed;
+    }
+
+    .corporate-preview .preview-top {
+      width: 80%;
+      background: #075985;
+    }
+
+    .fresher-preview .preview-top {
+      width: 50%;
+      background: #059669;
+    }
+
+    /* ================= TRIAL ================= */
+
+    .trial-banner {
+      padding: 16px 20px;
+      background: rgba(37,99,235,0.12);
+      border: 1px solid rgba(37,99,235,0.3);
+      border-radius: 14px;
+      margin-bottom: 25px;
+      color: #dbeafe;
+    }
+
+    /* ================= GRID ================= */
+
+    .builder-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 25px;
+    }
+
+    .form-card,
+    .preview-card {
+      background: #111c2b;
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 22px;
+      padding: 25px;
+    }
+
+    .form-card h2,
+    .preview-card h2 {
+      margin-bottom: 22px;
+    }
+
+    label {
+      display: block;
+      margin: 15px 0 7px;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    input,
+    textarea {
+      width: 100%;
+      border: 1px solid #334155;
+      background: #0b1625;
+      color: white;
+      border-radius: 10px;
+      padding: 13px;
+      outline: none;
+      font-family: inherit;
+      font-size: 14px;
+    }
+
+    input:focus,
+    textarea:focus {
+      border-color: #3478f6;
+      box-shadow: 0 0 0 2px rgba(52,120,246,0.15);
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 90px;
+    }
+
+    .btn-primary,
+    .btn-secondary {
+      width: 100%;
+      border: none;
+      border-radius: 12px;
+      padding: 15px;
+      margin-top: 22px;
+      font-family: inherit;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: 0.25s;
+    }
+
+    .btn-primary {
+      background: #3478f6;
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: #2563eb;
+      transform: translateY(-2px);
+    }
+
+    .btn-secondary {
+      background: #17263a;
+      color: #dbeafe;
+      border: 1px solid #334155;
+    }
+
+    .btn-secondary:hover {
+      border-color: #3478f6;
+    }
+
+    /* ================= RESUME PREVIEW ================= */
+
+    #resumePreview {
+      min-height: 650px;
+      background: white;
+      color: #111827;
+      border-radius: 10px;
+      padding: 40px;
+      overflow: hidden;
+      transition: 0.3s;
+    }
+
+    #resumePreview h1 {
+      font-size: 34px;
+      margin-bottom: 5px;
+    }
+
+    #resumePreview .contact {
+      color: #64748b;
+      font-size: 14px;
+      margin-bottom: 18px;
+    }
+
+    #resumePreview hr {
+      border: none;
+      border-top: 1px solid #e5e7eb;
+      margin: 20px 0;
+    }
+
+    .resume-section {
+      margin-top: 20px;
+    }
+
+    .resume-section h3 {
+      color: #2563eb;
+      font-size: 18px;
+      margin-bottom: 7px;
+    }
+
+    .resume-section p {
+      color: #374151;
+      line-height: 1.65;
+      white-space: pre-line;
+    }
+
+    /* ================= TEMPLATE STYLES ================= */
+
+    #resumePreview.template-executive {
+      border-top: 10px solid #111827;
+    }
+
+    #resumePreview.template-ats {
+      border-left: 10px solid #2563eb;
+    }
+
+    #resumePreview.template-minimal {
+      border-top: 4px solid #111827;
+    }
+
+    #resumePreview.template-minimal h1 {
+      font-weight: 500;
+    }
+
+    #resumePreview.template-creative {
+      border-top: 10px solid #7c3aed;
+    }
+
+    #resumePreview.template-creative h3 {
+      color: #7c3aed;
+    }
+
+    #resumePreview.template-corporate {
+      border-top: 10px solid #075985;
+    }
+
+    #resumePreview.template-corporate h3 {
+      color: #075985;
+    }
+
+    #resumePreview.template-fresher {
+      border-top: 10px solid #059669;
+    }
+
+    #resumePreview.template-fresher h3 {
+      color: #059669;
+    }
+
+    /* ================= STATUS ================= */
+
+    #statusMessage {
+      display: none;
+      margin-top: 15px;
+      padding: 12px;
+      border-radius: 10px;
+      background: rgba(34,197,94,0.12);
+      color: #86efac;
+      font-size: 13px;
+    }
+
+    /* ================= MOBILE ================= */
+
+    @media (max-width: 1000px) {
+
+      .template-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .builder-grid {
+        grid-template-columns: 1fr;
+      }
+
+    }
+
+    @media (max-width: 600px) {
+
+      .nav-container {
+        min-height: 75px;
+      }
+
+      .logo {
+        font-size: 20px;
+      }
+
+      .logo-icon {
+        width: 40px;
+        height: 40px;
+      }
+
+      .nav-btn {
+        padding: 10px 14px;
+        font-size: 12px;
+      }
+
+      .template-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .template-heading {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px;
+      }
+
+      #resumePreview {
+        padding: 25px;
+      }
+
+      #resumePreview h1 {
+        font-size: 27px;
+      }
+
+    }
+
+  </style>
+</head>
+
 <body>
+
+  <!-- ================= NAVBAR ================= -->
 
   <header class="navbar">
     <div class="container nav-container">
+
       <div class="logo">
         <span class="logo-icon">AI</span>
         <span>ResumeAI</span>
       </div>
-      <a href="index.html" class="nav-btn">Back to Home</a>
+
+      <a href="index.html" class="nav-btn">
+        Back to Home
+      </a>
+
     </div>
   </header>
 
+
+  <!-- ================= MAIN ================= -->
+
   <section class="resume-builder">
+
+    <!-- TEMPLATES -->
+
     <div class="template-selector">
-    <div class="template-heading">
+
+      <div class="template-heading">
         <span>Choose Your Template</span>
         <small>6 Professional Designs</small>
-    </div>
-
-    <div class="template-grid">
-
-        <button class="template-card active" type="button" onclick="selectTemplate('executive', this)">
-            <div class="template-preview executive-preview">
-                <div class="preview-top"></div>
-                <div class="preview-lines"></div>
-            </div>
-            <strong>Executive</strong>
-            <span>Professional</span>
-        </button>
-
-        <button class="template-card" type="button" onclick="selectTemplate('ats', this)">
-            <div class="template-preview ats-preview">
-                <div class="preview-top"></div>
-                <div class="preview-lines"></div>
-            </div>
-            <strong>Modern ATS</strong>
-            <span>ATS Friendly</span>
-        </button>
-
-        <button class="template-card" type="button" onclick="selectTemplate('minimal', this)">
-            <div class="template-preview minimal-preview">
-                <div class="preview-top"></div>
-                <div class="preview-lines"></div>
-            </div>
-            <strong>Minimal</strong>
-            <span>Clean Design</span>
-        </button>
-
-        <button class="template-card" type="button" onclick="selectTemplate('creative', this)">
-            <div class="template-preview creative-preview">
-                <div class="preview-top"></div>
-                <div class="preview-lines"></div>
-            </div>
-            <strong>Creative</strong>
-            <span>Premium</span>
-        </button>
-
-        <button class="template-card" type="button" onclick="selectTemplate('corporate', this)">
-            <div class="template-preview corporate-preview">
-                <div class="preview-top"></div>
-                <div class="preview-lines"></div>
-            </div>
-            <strong>Corporate</strong>
-            <span>Business</span>
-        </button>
-
-        <button class="template-card" type="button" onclick="selectTemplate('fresher', this)">
-            <div class="template-preview fresher-preview">
-                <div class="preview-top"></div>
-                <div class="preview-lines"></div>
-            </div>
-            <strong>Fresher Elite</strong>
-            <span>Students</span>
-        </button>
-
-    </div>
-</div>
-
-  <div class="container">
-    <div id="trialBanner" class="trial-banner">
-      🎉 Free Trial: 10 days remaining
-    </div>
-  </div>
-
-  <div class="container builder-grid">
-
-    <div class="form-card">
-      <h2>Create Your Professional Resume</h2>
-
-      <div class="form-card">
-        <h2>Create Your Professional Resume</h2>
-
-        <label>Full Name</label>
-        <input type="text" id="name" placeholder="Enter your full name" />
-
-        <label>Email</label>
-        <input type="email" id="email" placeholder="Enter your email" />
-
-        <label>Phone Number</label>
-        <input type="text" id="phone" placeholder="Enter your phone number" />
-
-        <label>Education</label>
-        <textarea id="education" rows="3" placeholder="B.Tech, College Name..."></textarea>
-
-        <label>Skills</label>
-        <textarea id="skills" rows="3" placeholder="Java, Python, Web Development..."></textarea>
-
-        <label>Experience</label>
-        <textarea id="experience" rows="4" placeholder="Internship, Projects..."></textarea>
-
-        <button class="btn-primary full-width" onclick="generateResume()">
-          Generate Resume
-        </button>
-
-        <button class="btn-secondary full-width" onclick="generateAIResume()" style="margin-top:15px;">
-          ✨ Generate with Priyanshu AI
-        </button>
       </div>
 
-      <div class="preview-card">
-        <div id="resumePreview">
-          <div id="pdfResume" style="display:none;background:white;color:black;padding:40px;width:800px;"></div>
-          <h1 style="font-size:34px;">Your Name</h1>
-          <p style="color:#64748b;">Email | Phone</p>
+      <div class="template-grid">
 
-          <hr style="margin:20px 0;">
+        <button class="template-card active"
+                type="button"
+                onclick="selectTemplate('executive', this)">
 
-          <h3 style="color:#2563eb;">Professional Summary</h3>
-          <p>Your AI-generated professional summary will appear here.</p>
+          <div class="template-preview executive-preview">
+            <div class="preview-top"></div>
+            <div class="preview-lines"></div>
+          </div>
 
-          <h3 style="color:#2563eb;margin-top:20px;">Education</h3>
-          <p>Your education details.</p>
+          <strong>Executive</strong>
+          <span>Professional</span>
 
-          <h3 style="color:#2563eb;margin-top:20px;">Skills</h3>
-          <p>Your skills.</p>
+        </button>
 
-          <h3 style="color:#2563eb;margin-top:20px;">Experience</h3>
-          <p>Your experience.</p>
+
+        <button class="template-card"
+                type="button"
+                onclick="selectTemplate('ats', this)">
+
+          <div class="template-preview ats-preview">
+            <div class="preview-top"></div>
+            <div class="preview-lines"></div>
+          </div>
+
+          <strong>Modern ATS</strong>
+          <span>ATS Friendly</span>
+
+        </button>
+
+
+        <button class="template-card"
+                type="button"
+                onclick="selectTemplate('minimal', this)">
+
+          <div class="template-preview minimal-preview">
+            <div class="preview-top"></div>
+            <div class="preview-lines"></div>
+          </div>
+
+          <strong>Minimal</strong>
+          <span>Clean Design</span>
+
+        </button>
+
+
+        <button class="template-card"
+                type="button"
+                onclick="selectTemplate('creative', this)">
+
+          <div class="template-preview creative-preview">
+            <div class="preview-top"></div>
+            <div class="preview-lines"></div>
+          </div>
+
+          <strong>Creative</strong>
+          <span>Premium</span>
+
+        </button>
+
+
+        <button class="template-card"
+                type="button"
+                onclick="selectTemplate('corporate', this)">
+
+          <div class="template-preview corporate-preview">
+            <div class="preview-top"></div>
+            <div class="preview-lines"></div>
+          </div>
+
+          <strong>Corporate</strong>
+          <span>Business</span>
+
+        </button>
+
+
+        <button class="template-card"
+                type="button"
+                onclick="selectTemplate('fresher', this)">
+
+          <div class="template-preview fresher-preview">
+            <div class="preview-top"></div>
+            <div class="preview-lines"></div>
+          </div>
+
+          <strong>Fresher Elite</strong>
+          <span>Students</span>
+
+        </button>
+
+      </div>
+
+    </div>
+
+
+    <div class="container">
+
+      <!-- TRIAL -->
+
+      <div id="trialBanner" class="trial-banner">
+        🎉 Free Trial: 10 days remaining
+      </div>
+
+
+      <div class="builder-grid">
+
+        <!-- ================= FORM ================= -->
+
+        <div class="form-card">
+
+          <h2>Create Your Professional Resume</h2>
+
+
+          <label for="name">
+            Full Name
+          </label>
+
+          <input
+            type="text"
+            id="name"
+            placeholder="Enter your full name"
+          >
+
+
+          <label for="email">
+            Email
+          </label>
+
+          <input
+            type="email"
+            id="email"
+            placeholder="Enter your email"
+          >
+
+
+          <label for="phone">
+            Phone Number
+          </label>
+
+          <input
+            type="text"
+            id="phone"
+            placeholder="Enter your phone number"
+          >
+
+
+          <label for="education">
+            Education
+          </label>
+
+          <textarea
+            id="education"
+            rows="4"
+            placeholder="B.Tech, College Name..."
+          ></textarea>
+
+
+          <label for="skills">
+            Skills
+          </label>
+
+          <textarea
+            id="skills"
+            rows="4"
+            placeholder="Java, Python, Web Development..."
+          ></textarea>
+
+
+          <label for="experience">
+            Experience
+          </label>
+
+          <textarea
+            id="experience"
+            rows="4"
+            placeholder="Internship, Projects..."
+          ></textarea>
+
+
+          <button
+            class="btn-primary"
+            type="button"
+            onclick="generateResume()"
+          >
+            Generate Resume
+          </button>
+
+
+          <button
+            class="btn-secondary"
+            type="button"
+            onclick="generateAIResume()"
+          >
+            ✨ Generate with Priyanshu AI
+          </button>
+
+
+          <div id="statusMessage"></div>
+
         </div>
 
-        <button class="btn-primary full-width" style="margin-top:25px;" onclick="downloadPDF()">
-          Download Professional PDF
-        </button>
+
+        <!-- ================= PREVIEW ================= -->
+
+        <div class="preview-card">
+
+          <h2>Resume Preview</h2>
+
+          <div id="resumePreview"
+               class="template-executive">
+
+            <h1 id="previewName">
+              Your Name
+            </h1>
+
+            <p class="contact">
+              <span id="previewEmail">Email</span>
+              &nbsp; | &nbsp;
+              <span id="previewPhone">Phone</span>
+            </p>
+
+            <hr>
+
+
+            <div class="resume-section">
+
+              <h3>
+                Professional Summary
+              </h3>
+
+              <p id="previewSummary">
+                Your professional summary will appear here.
+              </p>
+
+            </div>
+
+
+            <div class="resume-section">
+
+              <h3>
+                Education
+              </h3>
+
+              <p id="previewEducation">
+                Your education details will appear here.
+              </p>
+
+            </div>
+
+
+            <div class="resume-section">
+
+              <h3>
+                Skills
+              </h3>
+
+              <p id="previewSkills">
+                Your skills will appear here.
+              </p>
+
+            </div>
+
+
+            <div class="resume-section">
+
+              <h3>
+                Experience
+              </h3>
+
+              <p id="previewExperience">
+                Your experience will appear here.
+              </p>
+
+            </div>
+
+          </div>
+
+
+          <!-- PDF BUTTON -->
+
+          <button
+            class="btn-primary"
+            type="button"
+            onclick="downloadPDF()"
+          >
+            📄 Download Professional PDF
+          </button>
+
+        </div>
+
       </div>
 
     </div>
+
   </section>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-<script src="script.js"></script>
 
-</body>
-  </html>
-<script>
-/* ===== FINAL TEMPLATE SWITCHER ===== */
 
-(function () {
+  <!-- ================= JAVASCRIPT ================= -->
+
+  <script>
+
+    /* =========================================
+       SELECTED TEMPLATE
+    ========================================= */
 
     let currentTemplate =
-        localStorage.getItem("resumeai_selected_template") || "executive";
+      localStorage.getItem("resumeai_selected_template") ||
+      "executive";
 
-    function applyTemplate(template) {
 
-        currentTemplate = template;
+    /* =========================================
+       TEMPLATE FUNCTION
+    ========================================= */
 
-        localStorage.setItem(
-            "resumeai_selected_template",
-            template
+    function selectTemplate(template, button) {
+
+      currentTemplate = template;
+
+      localStorage.setItem(
+        "resumeai_selected_template",
+        template
+      );
+
+
+      const preview =
+        document.getElementById("resumePreview");
+
+
+      if (!preview) {
+        return;
+      }
+
+
+      preview.classList.remove(
+        "template-executive",
+        "template-ats",
+        "template-minimal",
+        "template-creative",
+        "template-corporate",
+        "template-fresher"
+      );
+
+
+      preview.classList.add(
+        "template-" + template
+      );
+
+
+      document
+        .querySelectorAll(".template-card")
+        .forEach(function(card) {
+
+          card.classList.remove("active");
+
+        });
+
+
+      if (button) {
+        button.classList.add("active");
+      }
+
+    }
+
+
+    /* =========================================
+       GET INPUT VALUE
+    ========================================= */
+
+    function getValue(id, fallback) {
+
+      const element =
+        document.getElementById(id);
+
+      if (!element) {
+        return fallback;
+      }
+
+      const value =
+        element.value.trim();
+
+      return value || fallback;
+
+    }
+
+
+    /* =========================================
+       GENERATE RESUME
+    ========================================= */
+
+    function generateResume() {
+
+      const name =
+        getValue("name", "Your Name");
+
+      const email =
+        getValue("email", "your@email.com");
+
+      const phone =
+        getValue("phone", "+91 XXXXX XXXXX");
+
+      const education =
+        getValue(
+          "education",
+          "Add your education details."
         );
 
-        const preview = document.getElementById("resumePreview");
+      const skills =
+        getValue(
+          "skills",
+          "Add your professional skills."
+        );
+
+      const experience =
+        getValue(
+          "experience",
+          "Add your experience or projects."
+        );
+
+
+      document.getElementById("previewName").textContent =
+        name;
+
+      document.getElementById("previewEmail").textContent =
+        email;
+
+      document.getElementById("previewPhone").textContent =
+        phone;
+
+      document.getElementById("previewEducation").textContent =
+        education;
+
+      document.getElementById("previewSkills").textContent =
+        skills;
+
+      document.getElementById("previewExperience").textContent =
+        experience;
+
+
+      const summary =
+        "Motivated and career-focused professional with strong technical knowledge, communication skills and a willingness to learn. Passionate about building practical projects and developing professional skills.";
+
+      document.getElementById("previewSummary").textContent =
+        summary;
+
+
+      showStatus(
+        "✅ Resume generated successfully!",
+        false
+      );
+
+
+      window.scrollTo({
+        top: document.querySelector(".preview-card").offsetTop - 80,
+        behavior: "smooth"
+      });
+
+    }
+
+
+    /* =========================================
+       PRIYANSHU AI RESUME
+    ========================================= */
+
+    function generateAIResume() {
+
+      const name =
+        getValue("name", "Your Name");
+
+      const email =
+        getValue("email", "your@email.com");
+
+      const phone =
+        getValue("phone", "+91 XXXXX XXXXX");
+
+      const education =
+        getValue(
+          "education",
+          "B.Tech / Graduation"
+        );
+
+      const skills =
+        getValue(
+          "skills",
+          "Communication, Problem Solving, Computer Skills"
+        );
+
+      const experience =
+        getValue(
+          "experience",
+          "Projects / Internship / Fresher"
+        );
+
+
+      document.getElementById("previewName").textContent =
+        name;
+
+      document.getElementById("previewEmail").textContent =
+        email;
+
+      document.getElementById("previewPhone").textContent =
+        phone;
+
+      document.getElementById("previewEducation").textContent =
+        education;
+
+      document.getElementById("previewSkills").textContent =
+        skills;
+
+      document.getElementById("previewExperience").textContent =
+        experience;
+
+
+      document.getElementById("previewSummary").textContent =
+        "A motivated and dedicated professional with a strong interest in technology, continuous learning and practical problem solving. Demonstrates a positive attitude, adaptability and commitment to professional growth. Interested in applying technical and communication skills to real-world projects and opportunities.";
+
+
+      showStatus(
+        "✨ Priyanshu AI resume generated successfully!",
+        false
+      );
+
+    }
+
+
+    /* =========================================
+       STATUS MESSAGE
+    ========================================= */
+
+    function showStatus(message, error) {
+
+      const status =
+        document.getElementById("statusMessage");
+
+      if (!status) {
+        return;
+      }
+
+
+      status.style.display = "block";
+
+      status.textContent = message;
+
+
+      if (error) {
+
+        status.style.background =
+          "rgba(239,68,68,0.12)";
+
+        status.style.color =
+          "#fca5a5";
+
+      } else {
+
+        status.style.background =
+          "rgba(34,197,94,0.12)";
+
+        status.style.color =
+          "#86efac";
+
+      }
+
+
+      setTimeout(function() {
+
+        status.style.display = "none";
+
+      }, 4000);
+
+    }
+
+
+    /* =========================================
+       DOWNLOAD PDF
+    ========================================= */
+
+    async function downloadPDF() {
+
+      const preview =
+        document.getElementById("resumePreview");
+
+
+      if (!preview) {
+
+        alert("Resume Preview nahi mila.");
+
+        return;
+
+      }
+
+
+      const hasName =
+        document
+          .getElementById("previewName")
+          .textContent.trim();
+
+
+      if (!hasName || hasName === "Your Name") {
+
+        alert(
+          "Pehle apni details fill karke Generate Resume par click karo."
+        );
+
+        return;
+
+      }
+
+
+      if (
+        typeof html2pdf === "undefined"
+      ) {
+
+        alert(
+          "PDF library load nahi hui. Internet connection check karke page reload karo."
+        );
+
+        return;
+
+      }
+
+
+      try {
+
+        showStatus(
+          "⏳ PDF prepare ho rahi hai...",
+          false
+        );
+
+
+        /*
+          IMPORTANT:
+          Original preview ko directly PDF me convert nahi karenge.
+          Isse dark website CSS ki wajah se blank PDF problem avoid hoti hai.
+        */
+
+
+        const pdfContainer =
+          document.createElement("div");
+
+
+        pdfContainer.style.position =
+          "fixed";
+
+        pdfContainer.style.left =
+          "-10000px";
+
+        pdfContainer.style.top =
+          "0";
+
+        pdfContainer.style.width =
+          "794px";
+
+        pdfContainer.style.background =
+          "#ffffff";
+
+        pdfContainer.style.padding =
+          "0";
+
+        pdfContainer.style.zIndex =
+          "-1";
+
+
+        const pdfContent =
+          preview.cloneNode(true);
+
+
+        /*
+          PDF me button nahi chahiye
+        */
+
+        pdfContent
+          .querySelectorAll("button")
+          .forEach(function(button) {
+
+            button.remove();
+
+          });
+
+
+        pdfContent.style.width =
+          "794px";
+
+        pdfContent.style.minHeight =
+          "1123px";
+
+        pdfContent.style.background =
+          "#ffffff";
+
+        pdfContent.style.color =
+          "#111827";
+
+        pdfContent.style.borderRadius =
+          "0";
+
+        pdfContent.style.padding =
+          "50px";
+
+        pdfContent.style.boxSizing =
+          "border-box";
+
+        pdfContent.style.overflow =
+          "visible";
+
+
+        pdfContainer.appendChild(
+          pdfContent
+        );
+
+
+        document.body.appendChild(
+          pdfContainer
+        );
+
+
+        /*
+          Browser ko content render karne ka
+          thoda time dete hain.
+        */
+
+        await new Promise(function(resolve) {
+
+          setTimeout(resolve, 300);
+
+        });
+
+
+        const filename =
+          "ResumeAI_" +
+          document
+            .getElementById("previewName")
+            .textContent
+            .trim()
+            .replace(/[^a-z0-9]/gi, "_") +
+          ".pdf";
+
+
+        const options = {
+
+          margin: 0,
+
+          filename: filename,
+
+          image: {
+            type: "jpeg",
+            quality: 0.98
+          },
+
+          html2canvas: {
+
+            scale: 2,
+
+            useCORS: true,
+
+            backgroundColor: "#ffffff",
+
+            logging: false
+
+          },
+
+          jsPDF: {
+
+            unit: "mm",
+
+            format: "a4",
+
+            orientation: "portrait"
+
+          },
+
+          pagebreak: {
+            mode: [
+              "avoid-all",
+              "css",
+              "legacy"
+            ]
+          }
+
+        };
+
+
+        await html2pdf()
+          .set(options)
+          .from(pdfContent)
+          .save();
+
+
+        /*
+          Temporary PDF element remove
+        */
+
+        pdfContainer.remove();
+
+
+        showStatus(
+          "✅ PDF successfully download ho gayi!",
+          false
+        );
+
+      }
+
+      catch (error) {
+
+        console.error(
+          "PDF Error:",
+          error
+        );
+
+
+        alert(
+          "PDF banane me problem aayi. Page reload karke dobara try karo."
+        );
+
+      }
+
+    }
+
+
+    /* =========================================
+       PAGE LOAD
+    ========================================= */
+
+    document.addEventListener(
+      "DOMContentLoaded",
+      function() {
+
+        const savedTemplate =
+          localStorage.getItem(
+            "resumeai_selected_template"
+          ) ||
+          "executive";
+
+
+        currentTemplate =
+          savedTemplate;
+
+
+        const preview =
+          document.getElementById(
+            "resumePreview"
+          );
+
 
         if (preview) {
 
-            preview.classList.remove(
-                "template-executive",
-                "template-ats",
-                "template-minimal",
-                "template-creative",
-                "template-corporate",
-                "template-fresher"
-            );
+          preview.classList.remove(
+            "template-executive",
+            "template-ats",
+            "template-minimal",
+            "template-creative",
+            "template-corporate",
+            "template-fresher"
+          );
 
-            preview.classList.add(
-                "template-" + template
-            );
+
+          preview.classList.add(
+            "template-" +
+            currentTemplate
+          );
+
         }
 
-        document.querySelectorAll(".template-card").forEach(function (card) {
-            card.classList.remove("active");
 
-            const clickCode = card.getAttribute("onclick") || "";
+        document
+          .querySelectorAll(".template-card")
+          .forEach(function(card) {
 
-            if (clickCode.includes("'" + template + "'")) {
-                card.classList.add("active");
-            }
-        });
-    }
+            const code =
+              card.getAttribute("onclick") ||
+              "";
 
-    window.selectTemplate = function (template, button) {
-        applyTemplate(template);
-    };
 
-    document.addEventListener("DOMContentLoaded", function () {
+            if (
+              code.includes(
+                "'" +
+                currentTemplate +
+                "'"
+              )
+            ) {
 
-        document.querySelectorAll(".template-card").forEach(function (card) {
+              card.classList.add(
+                "active"
+              );
 
-            card.addEventListener("click", function () {
+            } else {
 
-                const code = card.getAttribute("onclick") || "";
+              card.classList.remove(
+                "active"
+              );
 
-                const match = code.match(
-                    /selectTemplate\(['"]([^'"]+)/
-                );
-
-                if (match && match[1]) {
-                    applyTemplate(match[1]);
-                }
-
-            });
-
-        });
-
-        applyTemplate(currentTemplate);
-
-        /* Keep selected template after resume generation */
-        const observer = new MutationObserver(function () {
-
-            const preview =
-                document.getElementById("resumePreview");
-
-            if (preview) {
-                preview.classList.remove(
-                    "template-executive",
-                    "template-ats",
-                    "template-minimal",
-                    "template-creative",
-                    "template-corporate",
-                    "template-fresher"
-                );
-
-                preview.classList.add(
-                    "template-" + currentTemplate
-                );
             }
 
-        });
+          });
 
-        const builder =
-            document.querySelector(".resume-builder");
+      }
+    );
 
-        if (builder) {
-            observer.observe(builder, {
-                childList: true,
-                subtree: true
-            });
-        }
+  </script>
 
-    });
-
-})();
-</script>
+</body>
+</html>
