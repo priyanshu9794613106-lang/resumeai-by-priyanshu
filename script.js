@@ -244,3 +244,38 @@ document.addEventListener("DOMContentLoaded", function () {
         selectedButton.classList.add("active");
     }
 });
+/* ===== SIMPLE 6 TEMPLATE SWITCHER ===== */
+
+function selectTemplate(template, button) {
+
+    const preview = document.getElementById("resumePreview");
+
+    if (!preview) {
+        alert("Resume preview nahi mila!");
+        return;
+    }
+
+    preview.classList.remove(
+        "template-executive",
+        "template-ats",
+        "template-minimal",
+        "template-creative",
+        "template-corporate",
+        "template-fresher"
+    );
+
+    preview.classList.add("template-" + template);
+
+    document.querySelectorAll(".template-card").forEach(function(card) {
+        card.classList.remove("active");
+    });
+
+    if (button) {
+        button.classList.add("active");
+    }
+
+    localStorage.setItem(
+        "resumeai_selected_template",
+        template
+    );
+}
