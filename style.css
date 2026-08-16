@@ -482,3 +482,147 @@ body{
         padding: 16px;
     }
 }
+/* =====================================================
+   RESUMEAI - 6 PROFESSIONAL RESUME TEMPLATES
+   ===================================================== */
+
+#resumePreview {
+    transition: all 0.3s ease;
+}
+
+/* ---------- EXECUTIVE ---------- */
+
+#resumePreview.template-executive {
+    font-family: Arial, sans-serif !important;
+    border-top: 8px solid #172033 !important;
+    box-shadow: 0 15px 45px rgba(0,0,0,0.12);
+}
+
+#resumePreview.template-executive h1 {
+    font-size: 32px !important;
+    letter-spacing: -0.5px;
+}
+
+#resumePreview.template-executive h2 {
+    color: #172033 !important;
+    border-left: 4px solid #2563eb;
+    padding-left: 10px;
+}
+
+
+/* ---------- MODERN ATS ---------- */
+
+#resumePreview.template-ats {
+    font-family: Arial, sans-serif !important;
+    border-top: 8px solid #2563eb !important;
+}
+
+#resumePreview.template-ats h1 {
+    color: #2563eb !important;
+    font-size: 30px !important;
+}
+
+#resumePreview.template-ats h2 {
+    color: #2563eb !important;
+    border-bottom: 2px solid #2563eb;
+    padding-bottom: 5px;
+}
+
+
+/* ---------- MINIMAL ---------- */
+
+#resumePreview.template-minimal {
+    font-family: Arial, sans-serif !important;
+    border-top: 2px solid #111827 !important;
+    box-shadow: none !important;
+}
+
+#resumePreview.template-minimal h1 {
+    color: #111827 !important;
+    font-weight: 500 !important;
+    letter-spacing: 1px;
+}
+
+#resumePreview.template-minimal h2 {
+    color: #374151 !important;
+    font-size: 17px !important;
+    border: none !important;
+    padding-left: 0 !important;
+}
+
+
+/* ---------- CREATIVE ---------- */
+
+#resumePreview.template-creative {
+    font-family: Arial, sans-serif !important;
+    border-left: 8px solid #7c3aed !important;
+    border-top: none !important;
+    box-shadow: 0 15px 45px rgba(124,58,237,0.16);
+}
+
+#resumePreview.template-creative h1 {
+    color: #7c3aed !important;
+    font-size: 31px !important;
+}
+
+#resumePreview.template-creative h2 {
+    color: #7c3aed !important;
+    border-left: 4px solid #a78bfa;
+    padding-left: 10px;
+}
+
+
+/* ---------- CORPORATE ---------- */
+
+#resumePreview.template-corporate {
+    font-family: Arial, sans-serif !important;
+    border-top: 9px solid #0f4c81 !important;
+}
+
+#resumePreview.template-corporate h1 {
+    color: #0f4c81 !important;
+    font-size: 30px !important;
+}
+
+#resumePreview.template-corporate h2 {
+    color: #0f4c81 !important;
+    border-bottom: 2px solid #0f4c81;
+    padding-bottom: 6px;
+}
+
+
+/* ---------- FRESHER ELITE ---------- */
+
+#resumePreview.template-fresher {
+    font-family: Arial, sans-serif !important;
+    border-top: 8px solid #059669 !important;
+}
+
+#resumePreview.template-fresher h1 {
+    color: #059669 !important;
+    font-size: 31px !important;
+}
+
+#resumePreview.template-fresher h2 {
+    color: #059669 !important;
+    border-left: 4px solid #34d399;
+    padding-left: 10px;
+}
+
+
+/* ---------- MOBILE ---------- */
+
+@media (max-width: 600px) {
+
+    #resumePreview {
+        padding: 18px !important;
+    }
+
+    #resumePreview h1 {
+        font-size: 25px !important;
+    }
+
+    #resumePreview h2 {
+        font-size: 17px !important;
+    }
+}
