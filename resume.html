@@ -162,3 +162,112 @@
 
 </body>
   </html>
+<script>
+/* ===== FINAL TEMPLATE SWITCHER ===== */
+
+(function () {
+
+    let currentTemplate =
+        localStorage.getItem("resumeai_selected_template") || "executive";
+
+    function applyTemplate(template) {
+
+        currentTemplate = template;
+
+        localStorage.setItem(
+            "resumeai_selected_template",
+            template
+        );
+
+        const preview = document.getElementById("resumePreview");
+
+        if (preview) {
+
+            preview.classList.remove(
+                "template-executive",
+                "template-ats",
+                "template-minimal",
+                "template-creative",
+                "template-corporate",
+                "template-fresher"
+            );
+
+            preview.classList.add(
+                "template-" + template
+            );
+        }
+
+        document.querySelectorAll(".template-card").forEach(function (card) {
+            card.classList.remove("active");
+
+            const clickCode = card.getAttribute("onclick") || "";
+
+            if (clickCode.includes("'" + template + "'")) {
+                card.classList.add("active");
+            }
+        });
+    }
+
+    window.selectTemplate = function (template, button) {
+        applyTemplate(template);
+    };
+
+    document.addEventListener("DOMContentLoaded", function () {
+
+        document.querySelectorAll(".template-card").forEach(function (card) {
+
+            card.addEventListener("click", function () {
+
+                const code = card.getAttribute("onclick") || "";
+
+                const match = code.match(
+                    /selectTemplate\(['"]([^'"]+)/
+                );
+
+                if (match && match[1]) {
+                    applyTemplate(match[1]);
+                }
+
+            });
+
+        });
+
+        applyTemplate(currentTemplate);
+
+        /* Keep selected template after resume generation */
+        const observer = new MutationObserver(function () {
+
+            const preview =
+                document.getElementById("resumePreview");
+
+            if (preview) {
+                preview.classList.remove(
+                    "template-executive",
+                    "template-ats",
+                    "template-minimal",
+                    "template-creative",
+                    "template-corporate",
+                    "template-fresher"
+                );
+
+                preview.classList.add(
+                    "template-" + currentTemplate
+                );
+            }
+
+        });
+
+        const builder =
+            document.querySelector(".resume-builder");
+
+        if (builder) {
+            observer.observe(builder, {
+                childList: true,
+                subtree: true
+            });
+        }
+
+    });
+
+})();
+</script>
