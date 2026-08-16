@@ -182,3 +182,65 @@ document.addEventListener('DOMContentLoaded', function () {
 function resetPayment() {
   localStorage.removeItem('resumeai_paid');
 }
+/* ===== RESUME TEMPLATE SWITCHER ===== */
+
+let selectedTemplate = "executive";
+
+function selectTemplate(template, button) {
+    selectedTemplate = template;
+
+    // Remove active state from all template cards
+    document.querySelectorAll(".template-card").forEach(card => {
+        card.classList.remove("active");
+    });
+
+    // Add active state to selected card
+    if (button) {
+        button.classList.add("active");
+    }
+
+    // Apply selected template to resume preview
+    const preview = document.getElementById("resumePreview");
+
+    if (preview) {
+        preview.classList.remove(
+            "template-executive",
+            "template-ats",
+            "template-minimal",
+            "template-creative",
+            "template-corporate",
+            "template-fresher"
+        );
+
+        preview.classList.add("template-" + template);
+    }
+
+    // Remember selected template
+    localStorage.setItem("resumeai_selected_template", template);
+}
+
+/* Restore previously selected template */
+document.addEventListener("DOMContentLoaded", function () {
+    const savedTemplate =
+        localStorage.getItem("resumeai_selected_template") || "executive";
+
+    selectedTemplate = savedTemplate;
+
+    const preview = document.getElementById("resumePreview");
+
+    if (preview) {
+        preview.classList.add("template-" + savedTemplate);
+    }
+
+    const selectedButton = document.querySelector(
+        `.template-card[onclick*="'${savedTemplate}'"]`
+    );
+
+    if (selectedButton) {
+        document.querySelectorAll(".template-card").forEach(card => {
+            card.classList.remove("active");
+        });
+
+        selectedButton.classList.add("active");
+    }
+});
