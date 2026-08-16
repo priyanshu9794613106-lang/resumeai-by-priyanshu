@@ -126,12 +126,76 @@ function getRemainingDays() {
 
 // PDF Download + Payment Lock
 function downloadPDF() {
-    const element = document.getElementById("resumePreview");
+    const original = document.getElementById("resumePreview");
 
-    if (!element) {
+    if (!original) {
         alert("Resume Preview nahi mila!");
         return;
     }
+
+    if (!original.innerText.trim()) {
+        alert("Pehle Generate Resume par click karo!");
+        return;
+    }
+
+    // Temporary copy for PDF
+    const pdfElement = original.cloneNode(true);
+
+    pdfElement.id = "pdfResumeTemp";
+
+    pdfElement.style.display = "block";
+    pdfElement.style.position = "absolute";
+    pdfElement.style.left = "-9999px";
+    pdfElement.style.top = "0";
+    pdfElement.style.width = "794px";
+    pdfElement.style.minHeight = "1123px";
+    pdfElement.style.background = "#ffffff";
+    pdfElement.style.color = "#111827";
+    pdfElement.style.padding = "40px";
+    pdfElement.style.boxSizing = "border-box";
+
+    document.body.appendChild(pdfElement);
+
+    const options = {
+        margin: 0,
+        filename: "ResumeAI_Professional_Resume.pdf",
+        image: {
+            type: "jpeg",
+            quality: 0.98
+        },
+        html2canvas: {
+            scale: 2,
+            useCORS: true,
+            allowTaint: true,
+            backgroundColor: "#ffffff",
+            logging: false,
+            width: 794,
+            windowWidth: 794
+        },
+        jsPDF: {
+            unit: "px",
+            format: [794, 1123],
+            orientation: "portrait"
+        }
+    };
+
+    html2pdf()
+        .set(options)
+        .from(pdfElement)
+        .save()
+        .then(function () {
+            document.body.removeChild(pdfElement);
+        })
+        .catch(function (error) {
+            console.error("PDF Error:", error);
+
+            if (document.body.contains(pdfElement)) {
+                document.body.removeChild(pdfElement);
+            }
+
+            alert("PDF banane me problem aa rahi hai.");
+        });
+}
 
     if (!element.innerHTML.trim()) {
         alert("Pehle Generate Resume par click karo!");
